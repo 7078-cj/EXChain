@@ -116,48 +116,52 @@ export const MarketplaceProvider = ({ children }) => {
     }
   };
 
-  // ------------------------------
-  // 6️⃣ Fetch all documents
-  // ------------------------------
-    const fetchDocuments = async () => {
-    if (!contract) return [];
-    try {
-        const total = Number(await contract.totalSupply());
-        const docs = [];
+ // ------------------------------
+// 6️⃣ Fetch all documents
+// ------------------------------
+const fetchDocuments = async () => {
+  if (!contract) return [];
+  try {
+    const total = Number(await contract.totalSupply());
+    const docs = [];
 
-        for (let i = 1; i <= total; i++) {
-        const uri = await contract.tokenURI(i);
-        const owner = await contract.ownerOf(i);
-        const docData = await contract.documents(i);
+    for (let i = 1; i <= total; i++) {
+      const uri = await contract.tokenURI(i);
+      const owner = await contract.ownerOf(i);
+      const docData = await contract.documents(i);
 
-        const formattedPrice = docData.price
-            ? ethers.formatEther(docData.price)
-            : "0";
+      // Extract file name from URI
+      const name = uri.split("/").pop(); // "filename.ext"
 
-        docs.push({
-            tokenId: i,
-            uri,
-            owner,
-            forSale: docData.forSale,
-            price: formattedPrice, // ✅ store formatted string here
-        });
-        }
+      const formattedPrice = docData.price
+        ? ethers.formatEther(docData.price)
+        : "0";
 
-        setAllDocs(docs);
-
-        if (account) {
-        const mine = docs.filter(
-            (d) => d.owner.toLowerCase() === account.toLowerCase()
-        );
-        setMyDocs(mine);
-        }
-
-        return docs;
-    } catch (err) {
-        console.error("❌ Fetch failed:", err);
-        return [];
+      docs.push({
+        tokenId: i,
+        uri,
+        name,            // ✅ added name property
+        owner,
+        forSale: docData.forSale,
+        price: formattedPrice, // formatted string
+      });
     }
-    };
+
+    setAllDocs(docs);
+
+    if (account) {
+      const mine = docs.filter(
+        (d) => d.owner.toLowerCase() === account.toLowerCase()
+      );
+      setMyDocs(mine);
+    }
+
+    return docs;
+  } catch (err) {
+    console.error("❌ Fetch failed:", err);
+    return [];
+  }
+};
 
   // Auto-refresh on wallet/account change
   useEffect(() => {

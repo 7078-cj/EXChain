@@ -3,6 +3,7 @@ import { useMarketplace } from "../contexts/MarketplaceContext";
 import MintForm from "../components/MintForm";
 import { ethers } from "ethers";
 import DocumentList from "../components/DocumentList";
+import DocumentCard from "../components/DocumentCard";
 
 function Home() {
   const { allDocs } = useMarketplace();
@@ -10,19 +11,18 @@ function Home() {
   const url = import.meta.env.VITE_BUCKET_URL;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Document Marketplace</h1>
-
-      {/* Minting Form */}
+    <div className="max-w-7xl mx-auto p-6">
+  <section className="flex flex-col md:flex-row items-center justify-between gap-6 bg-blue-50 rounded-2xl p-6 mb-8 shadow">
+    <div>
+      <h1 className="text-3xl md:text-4xl font-extrabold mb-2 text-gray-800">Welcome to FileTrade</h1>
+      <p className="text-gray-700 mb-4">Mint, sell, and buy digital documents securely on-chain.</p>
       <MintForm />
-
-      <h2 className="text-xl font-semibold mt-6 mb-2">All Documents</h2>
-
-  
-        
-      <DocumentList  allDocs={allDocs} url={url} />
-   
     </div>
+    <img src="/assets/documents-illustration.png" alt="Documents" className="w-full md:w-1/2" />
+  </section>
+  <DocumentList allDocs={allDocs} url={url} />
+  
+</div>
   );
 }
 
