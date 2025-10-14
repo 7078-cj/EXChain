@@ -1,0 +1,5 @@
+uploads/
+env/
+
+__pycahe__/
+*.pyc
