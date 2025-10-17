@@ -19,6 +19,7 @@ app.add_middleware(
 UPLOAD_DIR = "uploads"
 PREVIEW_DIR = "previews"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(PREVIEW_DIR, exist_ok=True)
 
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.mount("/previews", StaticFiles(directory="previews"), name="previews")
