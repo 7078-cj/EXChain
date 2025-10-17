@@ -18,7 +18,7 @@ function Home() {
       <p className="text-gray-700 mb-4">Mint, sell, and buy digital documents securely on-chain.</p>
       <MintForm />
     </div>
-    <img src="/assets/documents-illustration.png" alt="Documents" className="w-full md:w-1/2" />
+    <img src="/Exchain.jpg" alt="Documents" className="w-full md:w-1/2" />
   </section>
   <DocumentList allDocs={allDocs} url={url} />
   
