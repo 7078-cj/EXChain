@@ -40,21 +40,22 @@ const DocumentCard = ({ doc, url, showBuy = true }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-5 hover:shadow-xl transition w-full">
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-5 hover:shadow-xl transition w-[40%]">
       <div className="flex items-center gap-3 mb-3">
         {getFileIcon(ext)}
         <h3 className="font-bold text-lg text-gray-800">{doc.name || `Document #${doc.tokenId}`}</h3>
       </div>
 
-      <p className="text-gray-600 mb-1 text-wrap">
-        <span className="font-semibold ">Owner:</span> {doc.owner}
+      <p className="text-gray-600 mb-1 text-wrap w-full">
+        <span className="font-semibold text-wrap w-full">Owner: </span> 
+        <p className="w-full text-wrap">{doc.owner}</p>
       </p>
       <p className="text-gray-600 mb-1 text-wrap">
         <span className="font-semibold ">Preview:</span>
       </p>
-      <p className="text-gray-600 mb-1 break-all">
+      <p className="text-gray-600 mb-1 break-all w-full">
         <span className="font-semibold">URI:</span>{" "}
-        <a href={`${url}${doc.uri}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+        <a href={`${url}${doc.uri}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline text-wrap w-full">
           {doc.uri}
         </a>
       </p>

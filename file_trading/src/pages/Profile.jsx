@@ -48,7 +48,7 @@ const Profile = () => {
       {myDocs.length === 0 ? (
         <p className="text-gray-600">You don’t own any documents yet.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex flex-row flex-wrap gap-6">
           {myDocs.map((doc) => (
             <DocumentCard key={doc.tokenId} doc={doc} url={url} showBuy={false} />
           ))}
