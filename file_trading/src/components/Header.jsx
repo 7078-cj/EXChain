@@ -11,7 +11,7 @@ const Header = () => {
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
         <div className="text-2xl font-extrabold text-gray-800">
-          <Link to="/">FileTrade</Link>
+          <Link to="/">EXChain</Link>
         </div>
 
         <nav className="flex gap-6 text-gray-700 font-medium">

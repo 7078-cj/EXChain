@@ -24,13 +24,19 @@ const getFileIcon = (ext) => {
 };
 
 const DocumentCard = ({ doc, url, showBuy = true }) => {
-  const { account, buyDocument } = useMarketplace();
+  const { account, buyDocument, listForSale } = useMarketplace();
   const isOwner = account?.toLowerCase() === doc.owner.toLowerCase();
   const ext = doc.name?.split(".").pop().toLowerCase() || "";
+  const [newPrice, setNewPrice] = React.useState(doc.price || "0");
 
   const handleBuy = async () => {
     if (!doc.price || doc.price === "0") return alert("Document not for sale!");
     await buyDocument(doc.tokenId, parseFloat(doc.price));
+  };
+
+  const handleListForSale = async () => {
+    if (!newPrice || newPrice === "0") return alert("Please enter a selling price greater than 0.");
+    await listForSale(doc.tokenId, parseFloat(newPrice));
   };
 
   return (
@@ -43,6 +49,9 @@ const DocumentCard = ({ doc, url, showBuy = true }) => {
       <p className="text-gray-600 mb-1 text-wrap">
         <span className="font-semibold ">Owner:</span> {doc.owner}
       </p>
+      <p className="text-gray-600 mb-1 text-wrap">
+        <span className="font-semibold ">Preview:</span>
+      </p>
       <p className="text-gray-600 mb-1 break-all">
         <span className="font-semibold">URI:</span>{" "}
         <a href={`${url}${doc.uri}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
@@ -52,6 +61,28 @@ const DocumentCard = ({ doc, url, showBuy = true }) => {
       <p className="text-gray-600 mb-3">
         <span className="font-semibold">Price:</span>{" "}
         {doc.price && doc.price !== "0" ? doc.price + " ETH" : "Not for sale"}
+        {
+          isOwner && doc.price == "0" ? (
+            <div className="mt-2">
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={newPrice}
+                onChange={(e) => setNewPrice(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg mb-2"
+                placeholder="Set price in ETH"
+              />
+              <button
+                onClick={handleListForSale}
+                className="w-full py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
+              >
+                List for Sale
+              </button>
+            </div>
+          ) : null // Only show input if owner and not for sale
+          
+        }
       </p>
 
       {showBuy && !isOwner && doc.forSale && doc.price !== "0" && (
